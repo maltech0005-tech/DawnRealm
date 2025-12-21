@@ -1,3 +1,12 @@
-[gd_scene format=3 uid="uid://cguuxjcscculj"]
+[gd_scene load_steps=3 format=3 uid="uid://cguuxjcscculj"]
+
+[ext_resource type="PackedScene" uid="uid://c1cps5o5tlehe" path="res://scenes/player.tscn" id="1_yqjtg"]
+[ext_resource type="PackedScene" uid="uid://clvg4hp4pi3df" path="res://scenes/land.tscn" id="2_lnu2h"]
 
 [node name="game" type="Node2D"]
+
+[node name="player" parent="." instance=ExtResource("1_yqjtg")]
+z_index = 20
+position = Vector2(-458.4815, 275.83163)
+
+[node name="land" parent="." instance=ExtResource("2_lnu2h")]
