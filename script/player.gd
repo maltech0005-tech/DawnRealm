@@ -11,7 +11,7 @@ var down = Vector2(0, 1)
 var player_direction = down
 
 func _ready() -> void:
-	player.add_to_group("player")
+	add_to_group("player")
 	
 func _physics_process(delta: float) -> void:
 	get_direction()

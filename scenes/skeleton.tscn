@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=3 uid="uid://cqjwklf07u834"]
+[gd_scene load_steps=59 format=3 uid="uid://cqjwklf07u834"]
 
 [ext_resource type="Texture2D" uid="uid://2js2lq4nelr7" path="res://assets/Cute_Fantasy_Free/Enemies/Skeleton.png" id="1_7p1mj"]
 [ext_resource type="Script" uid="uid://cxthkf2754m4p" path="res://scenes/skeleton.gd" id="1_txkty"]
@@ -426,6 +426,9 @@ size = Vector2(1.5, 17)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ivqcw"]
 size = Vector2(11, 17)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_txkty"]
+radius = 38.209946
+
 [node name="skeleton" type="CharacterBody2D"]
 script = ExtResource("1_txkty")
 
@@ -444,4 +447,11 @@ shape = SubResource("RectangleShape2D_txkty")
 position = Vector2(0.5, -1.5)
 shape = SubResource("RectangleShape2D_ivqcw")
 
+[node name="range" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="range"]
+shape = SubResource("CircleShape2D_txkty")
+
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="range" to="." method="_on_range_body_entered"]
+[connection signal="body_exited" from="range" to="." method="_on_range_body_exited"]
