@@ -13,4 +13,4 @@ position = Vector2(-458.4815, 275.83163)
 [node name="land" parent="." instance=ExtResource("2_lnu2h")]
 
 [node name="skeleton" parent="." instance=ExtResource("3_lnu2h")]
-position = Vector2(-450, 235)
+position = Vector2(-407, 158)
