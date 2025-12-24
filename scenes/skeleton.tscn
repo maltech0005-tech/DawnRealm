@@ -434,7 +434,7 @@ script = ExtResource("1_txkty")
 
 [node name="enemy_sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_pbvs3")
-animation = &"take_damage_front"
+animation = &"walking_front"
 autoplay = "idle_front"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

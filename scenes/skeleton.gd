@@ -9,6 +9,7 @@ var right = Vector2(1, 0)
 var up = Vector2(0, -1)
 var down = Vector2(0, 1)
 var enemy_direction = Vector2()
+var player_direction = Vector2()
 var player_inrange = false
 var player_position = Vector2()
 var player = null
@@ -67,16 +68,19 @@ func idle_animation():
 		enemy.play("idle_front")
 		
 func attack():
-	if enemy_direction==left:
-		enemy.play("walking_side")
-	if enemy_direction==right:
-		enemy.play("walking_side")
-	if enemy_direction==up:
-		enemy.play("walking_back")
-	if enemy_direction==down:
-		enemy.play("walking_front")
-	if player:
-		enemy_direction=(player.global_position-global_position)
 	if not player:
-		print("no node player")
+		return
+	enemy_direction = player.global_position - global_position
+	var dir = enemy_direction
+	
+	if abs(dir.x) > abs(dir.y):
+		# Horizontal movement
+		enemy.play("walking_side")
+		enemy.flip_h = dir.x < 0
+	else:
+		# Vertical movement
+		if dir.y < 0:
+			enemy.play("walking_back")
+		else:
+			enemy.play("walking_front")
 	
