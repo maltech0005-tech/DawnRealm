@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://cguuxjcscculj"]
+[gd_scene load_steps=5 format=3 uid="uid://cguuxjcscculj"]
 
 [ext_resource type="PackedScene" uid="uid://c1cps5o5tlehe" path="res://scenes/player.tscn" id="1_yqjtg"]
 [ext_resource type="PackedScene" uid="uid://clvg4hp4pi3df" path="res://scenes/land.tscn" id="2_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://cqjwklf07u834" path="res://scenes/skeleton.tscn" id="3_lnu2h"]
+[ext_resource type="PackedScene" uid="uid://cwj6ucgo2hnm" path="res://scenes/slime.tscn" id="4_lbhrr"]
 
 [node name="game" type="Node2D"]
 
@@ -14,3 +15,6 @@ position = Vector2(-458.4815, 275.83163)
 
 [node name="skeleton" parent="." instance=ExtResource("3_lnu2h")]
 position = Vector2(-407, 158)
+
+[node name="slime" parent="." instance=ExtResource("4_lbhrr")]
+position = Vector2(-465, 229)
