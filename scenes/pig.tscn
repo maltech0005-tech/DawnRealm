@@ -1,0 +1,129 @@
+[gd_scene load_steps=17 format=3 uid="uid://btfbsspgjaoqg"]
+
+[ext_resource type="Script" uid="uid://bptldx5l6gbxi" path="res://script/pig.gd" id="1_4a8uq"]
+[ext_resource type="Texture2D" uid="uid://15ct107etk4j" path="res://assets/Cute_Fantasy_Free/Animals/Pig/Pig.png" id="1_sq5kf"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sq5kf"]
+atlas = ExtResource("1_sq5kf")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4a8uq"]
+atlas = ExtResource("1_sq5kf")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j740r"]
+atlas = ExtResource("1_sq5kf")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ct3s0"]
+atlas = ExtResource("1_sq5kf")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7e1yb"]
+atlas = ExtResource("1_sq5kf")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bnrkt"]
+atlas = ExtResource("1_sq5kf")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_e1p3k"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sq5kf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4a8uq")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j740r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ct3s0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7e1yb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bnrkt")
+}],
+"loop": true,
+"name": &"move",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bfkq4"]
+radius = 1.105346
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kb7da"]
+radius = 6.7057395
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ley84"]
+radius = 25.0
+
+[sub_resource type="Gradient" id="Gradient_4a8uq"]
+interpolation_mode = 1
+interpolation_color_space = 1
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_j740r"]
+gradient = SubResource("Gradient_4a8uq")
+width = 15
+height = 2
+use_hdr = true
+
+[sub_resource type="Gradient" id="Gradient_ct3s0"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.2425, 0.97, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7e1yb"]
+gradient = SubResource("Gradient_ct3s0")
+width = 15
+height = 2
+
+[node name="pig" type="CharacterBody2D"]
+script = ExtResource("1_4a8uq")
+
+[node name="animal_sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(-0.9999994, -1.9704447)
+scale = Vector2(0.625, 0.6268472)
+sprite_frames = SubResource("SpriteFrames_e1p3k")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2.4873924, -0.36015892)
+shape = SubResource("CircleShape2D_bfkq4")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-1.7056465, -2.0353298)
+shape = SubResource("CircleShape2D_kb7da")
+
+[node name="Timer" type="Timer" parent="Area2D"]
+
+[node name="range" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="range"]
+shape = SubResource("CircleShape2D_ley84")
+
+[node name="hp" type="TextureProgressBar" parent="."]
+offset_left = -8.629692
+offset_top = -10.076155
+offset_right = 6.370308
+offset_bottom = -8.076155
+max_value = 3.0
+rounded = true
+texture_under = SubResource("GradientTexture2D_j740r")
+texture_progress = SubResource("GradientTexture2D_7e1yb")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+[connection signal="timeout" from="Area2D/Timer" to="." method="_on_timer_timeout"]
+[connection signal="body_entered" from="range" to="." method="_on_range_body_entered"]
+[connection signal="body_exited" from="range" to="." method="_on_range_body_exited"]

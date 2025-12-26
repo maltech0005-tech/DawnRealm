@@ -1,9 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://cguuxjcscculj"]
+[gd_scene load_steps=11 format=3 uid="uid://cguuxjcscculj"]
 
 [ext_resource type="PackedScene" uid="uid://c1cps5o5tlehe" path="res://scenes/player.tscn" id="1_yqjtg"]
 [ext_resource type="PackedScene" uid="uid://clvg4hp4pi3df" path="res://scenes/land.tscn" id="2_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://cqjwklf07u834" path="res://scenes/skeleton.tscn" id="3_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://cwj6ucgo2hnm" path="res://scenes/slime.tscn" id="4_lbhrr"]
+[ext_resource type="PackedScene" uid="uid://bapv86drwck4u" path="res://scenes/cow.tscn" id="5_gee14"]
+[ext_resource type="PackedScene" uid="uid://bq8l7spcuupp0" path="res://scenes/chicken.tscn" id="6_0tnpc"]
+[ext_resource type="PackedScene" uid="uid://btfbsspgjaoqg" path="res://scenes/pig.tscn" id="7_vtaks"]
+[ext_resource type="PackedScene" uid="uid://dhqpvivvwfdna" path="res://scenes/sheep.tscn" id="8_kvpfn"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_gee14"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_0tnpc"]
+normal = Vector2(0.9999975, -0.0022152942)
 
 [node name="game" type="Node2D"]
 
@@ -13,8 +22,37 @@ position = Vector2(-458.4815, 275.83163)
 
 [node name="land" parent="." instance=ExtResource("2_lnu2h")]
 
-[node name="skeleton" parent="." instance=ExtResource("3_lnu2h")]
-position = Vector2(-407, 158)
+[node name="animals" type="Node2D" parent="."]
 
-[node name="slime" parent="." instance=ExtResource("4_lbhrr")]
+[node name="cow" parent="animals" instance=ExtResource("5_gee14")]
+position = Vector2(-357, 94)
+
+[node name="chicken" parent="animals" instance=ExtResource("6_0tnpc")]
+position = Vector2(-517, 100)
+
+[node name="pig" parent="animals" instance=ExtResource("7_vtaks")]
+position = Vector2(-286, 186)
+
+[node name="sheep" parent="animals" instance=ExtResource("8_kvpfn")]
+position = Vector2(-463, 108)
+
+[node name="slime2" parent="animals" instance=ExtResource("4_lbhrr")]
+position = Vector2(-343, 264)
+
+[node name="enemies" type="Node2D" parent="."]
+
+[node name="skeleton" parent="enemies" instance=ExtResource("3_lnu2h")]
+position = Vector2(-418.80527, 160.59781)
+
+[node name="slime" parent="enemies" instance=ExtResource("4_lbhrr")]
 position = Vector2(-465, 229)
+
+[node name="boundary" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="boundary"]
+position = Vector2(-544.6829, 303.19806)
+shape = SubResource("WorldBoundaryShape2D_gee14")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="boundary"]
+position = Vector2(-545.84344, 245.05725)
+shape = SubResource("WorldBoundaryShape2D_0tnpc")

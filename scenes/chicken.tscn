@@ -1,0 +1,116 @@
+[gd_scene load_steps=15 format=3 uid="uid://bq8l7spcuupp0"]
+
+[ext_resource type="Script" uid="uid://d2p3eodscwqe1" path="res://script/chicken.gd" id="1_1yv3s"]
+[ext_resource type="Texture2D" uid="uid://b2qte22bhxvuq" path="res://assets/Cute_Fantasy_Free/Animals/Chicken/Chicken.png" id="1_8lku0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1yv3s"]
+atlas = ExtResource("1_8lku0")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nutj5"]
+atlas = ExtResource("1_8lku0")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8lku0"]
+atlas = ExtResource("1_8lku0")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rc7ma"]
+atlas = ExtResource("1_8lku0")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bti8l"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1yv3s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nutj5")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8lku0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rc7ma")
+}],
+"loop": true,
+"name": &"move",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pep2a"]
+radius = 1.105346
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5sgx4"]
+radius = 5.0004077
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8aah5"]
+radius = 21.0
+
+[sub_resource type="Gradient" id="Gradient_qhqgy"]
+interpolation_mode = 1
+interpolation_color_space = 1
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_1yv3s"]
+gradient = SubResource("Gradient_qhqgy")
+width = 10
+height = 1
+use_hdr = true
+
+[sub_resource type="Gradient" id="Gradient_qlg0r"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.2425, 0.97, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_nutj5"]
+gradient = SubResource("Gradient_qlg0r")
+width = 10
+height = 1
+
+[node name="chicken" type="CharacterBody2D"]
+script = ExtResource("1_1yv3s")
+
+[node name="animal_sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -0.1252594)
+scale = Vector2(0.5625, 0.5115232)
+sprite_frames = SubResource("SpriteFrames_bti8l")
+animation = &"move"
+frame_progress = 0.8971237
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1.1444092e-05, -0.0629406)
+shape = SubResource("CircleShape2D_pep2a")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-1.1444092e-05, -0.0629406)
+shape = SubResource("CircleShape2D_5sgx4")
+
+[node name="Timer" type="Timer" parent="Area2D"]
+
+[node name="range" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="range"]
+shape = SubResource("CircleShape2D_8aah5")
+
+[node name="hp" type="TextureProgressBar" parent="."]
+offset_left = -5.380863
+offset_top = -5.5453205
+offset_right = 4.619137
+offset_bottom = -4.5453205
+max_value = 2.0
+rounded = true
+texture_under = SubResource("GradientTexture2D_1yv3s")
+texture_progress = SubResource("GradientTexture2D_nutj5")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+[connection signal="timeout" from="Area2D/Timer" to="." method="_on_timer_timeout"]
+[connection signal="body_entered" from="range" to="." method="_on_range_body_entered"]
+[connection signal="body_exited" from="range" to="." method="_on_range_body_exited"]

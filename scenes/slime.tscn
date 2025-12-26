@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://cwj6ucgo2hnm"]
+[gd_scene load_steps=31 format=3 uid="uid://cwj6ucgo2hnm"]
 
 [ext_resource type="Texture2D" uid="uid://8m2jbxvlgidb" path="res://assets/Cute_Fantasy_Free/Enemies/Slime_Green.png" id="1_371uh"]
 [ext_resource type="Script" uid="uid://cqeykjqouqvl0" path="res://script/slime.gd" id="1_p2gj0"]
@@ -110,9 +110,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_0l8pv")
 }],
-"loop": true,
+"loop": false,
 "name": &"die",
-"speed": 5.0
+"speed": 7.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -170,6 +170,25 @@ radius = 9.073232
 [sub_resource type="CircleShape2D" id="CircleShape2D_1kmbt"]
 radius = 29.017237
 
+[sub_resource type="Gradient" id="Gradient_p2gj0"]
+interpolation_mode = 1
+interpolation_color_space = 1
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_p2gj0"]
+gradient = SubResource("Gradient_p2gj0")
+width = 15
+height = 2
+use_hdr = true
+
+[sub_resource type="Gradient" id="Gradient_n6pvg"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.2425, 0.97, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_n6pvg"]
+gradient = SubResource("Gradient_n6pvg")
+width = 15
+height = 2
+
 [node name="slime" type="CharacterBody2D"]
 script = ExtResource("1_p2gj0")
 
@@ -177,8 +196,7 @@ script = ExtResource("1_p2gj0")
 position = Vector2(0, -0.1252594)
 scale = Vector2(0.5625, 0.5115232)
 sprite_frames = SubResource("SpriteFrames_p2gj0")
-animation = &"move"
-frame_progress = 0.57222885
+animation = &"die"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.057308197, -0.6776819)
@@ -196,6 +214,16 @@ shape = SubResource("CircleShape2D_w8bnk")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="range"]
 shape = SubResource("CircleShape2D_1kmbt")
+
+[node name="hp" type="TextureProgressBar" parent="."]
+offset_left = -7.374199
+offset_top = -7.861906
+offset_right = 7.625801
+offset_bottom = -5.861906
+max_value = 3.0
+rounded = true
+texture_under = SubResource("GradientTexture2D_p2gj0")
+texture_progress = SubResource("GradientTexture2D_n6pvg")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

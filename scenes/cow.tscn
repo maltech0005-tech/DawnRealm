@@ -1,0 +1,131 @@
+[gd_scene load_steps=18 format=3 uid="uid://bapv86drwck4u"]
+
+[ext_resource type="Texture2D" uid="uid://15ct107etk4j" path="res://assets/Cute_Fantasy_Free/Animals/Pig/Pig.png" id="1_fgglk"]
+[ext_resource type="Script" uid="uid://18s7du885isy" path="res://script/cow.gd" id="1_gly4w"]
+[ext_resource type="Texture2D" uid="uid://4osndnrwt1i6" path="res://assets/Cute_Fantasy_Free/Animals/Cow/Cow.png" id="2_cairq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4a8uq"]
+atlas = ExtResource("1_fgglk")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j740r"]
+atlas = ExtResource("1_fgglk")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gly4w"]
+atlas = ExtResource("2_cairq")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y2el1"]
+atlas = ExtResource("2_cairq")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6j430"]
+atlas = ExtResource("2_cairq")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hh455"]
+atlas = ExtResource("2_cairq")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hh455"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4a8uq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j740r")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gly4w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y2el1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6j430")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hh455")
+}],
+"loop": true,
+"name": &"move",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8skmv"]
+radius = 1.105346
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xabja"]
+radius = 7.000294
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_flufj"]
+radius = 25.0
+
+[sub_resource type="Gradient" id="Gradient_gly4w"]
+interpolation_mode = 1
+interpolation_color_space = 1
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_y2el1"]
+gradient = SubResource("Gradient_gly4w")
+width = 15
+height = 2
+use_hdr = true
+
+[sub_resource type="Gradient" id="Gradient_6j430"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.2425, 0.97, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_hh455"]
+gradient = SubResource("Gradient_6j430")
+width = 15
+height = 2
+
+[node name="cow" type="CharacterBody2D"]
+script = ExtResource("1_gly4w")
+
+[node name="animal_sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -0.1252594)
+scale = Vector2(0.5625, 0.5115232)
+sprite_frames = SubResource("SpriteFrames_hh455")
+animation = &"move"
+frame_progress = 0.23091513
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1.1444092e-05, -0.0629406)
+shape = SubResource("CircleShape2D_8skmv")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-1.1444092e-05, -0.0629406)
+shape = SubResource("CircleShape2D_xabja")
+
+[node name="Timer" type="Timer" parent="Area2D"]
+
+[node name="range" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="range"]
+shape = SubResource("CircleShape2D_flufj")
+
+[node name="hp" type="TextureProgressBar" parent="."]
+offset_left = -7.374199
+offset_top = -7.861906
+offset_right = 7.625801
+offset_bottom = -5.861906
+max_value = 5.0
+rounded = true
+texture_under = SubResource("GradientTexture2D_y2el1")
+texture_progress = SubResource("GradientTexture2D_hh455")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+[connection signal="timeout" from="Area2D/Timer" to="." method="_on_timer_timeout"]
+[connection signal="body_entered" from="range" to="." method="_on_range_body_entered"]
+[connection signal="body_exited" from="range" to="." method="_on_range_body_exited"]

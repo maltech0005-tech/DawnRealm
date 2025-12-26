@@ -1,0 +1,66 @@
+[gd_scene load_steps=9 format=3 uid="uid://cj25kow24rxvc"]
+
+[ext_resource type="Texture2D" uid="uid://b36xbdpvppn82" path="res://assets/Cute_Fantasy_Free/Outdoor decoration/Oak_Tree_Small.png" id="1_avsvi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vplca"]
+atlas = ExtResource("1_avsvi")
+region = Rect2(32, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_viusy"]
+atlas = ExtResource("1_avsvi")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qd6xs"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vplca")
+}],
+"loop": true,
+"name": &"full",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_viusy")
+}],
+"loop": true,
+"name": &"stump",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ake3r"]
+radius = 6.310258
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_18mvg"]
+size = Vector2(1, 8)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dmmp0"]
+radius = 11.118813
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m26wl"]
+size = Vector2(5, 9.5)
+
+[node name="tree" type="CharacterBody2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_qd6xs")
+animation = &"full"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.68984985, -9.036896)
+shape = SubResource("CircleShape2D_ake3r")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(-0.10153198, 3.2294693)
+shape = SubResource("RectangleShape2D_18mvg")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-0.10153198, -10.619654)
+shape = SubResource("CircleShape2D_dmmp0")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 3.75)
+shape = SubResource("RectangleShape2D_m26wl")

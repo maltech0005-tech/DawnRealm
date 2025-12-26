@@ -1,5 +1,12 @@
 extends CharacterBody2D
+
 @onready var player: AnimatedSprite2D = $AnimatedSprite2D
+@onready var gold_amount: Label = $stats/gold_amount
+@onready var silver_amount: Label = $stats/silver_amount
+@onready var wood_amount: Label = $stats/wood_amount
+@onready var hp: TextureProgressBar =$stats/hp_progress
+@onready var area_2d: Area2D = $range
+@onready var timer: Timer = $range/Timer
 
 const SPEED = 1000.0
 var is_moving = false
@@ -9,9 +16,14 @@ var right = Vector2(1, 0)
 var up = Vector2(0, -1)
 var down = Vector2(0, 1)
 var player_direction = down
+var wood = 0
+var gold = 0
+var silver = 0
+var health=100
 
 func _ready() -> void:
 	add_to_group("player")
+	life_and_resources()
 	
 func _physics_process(delta: float) -> void:
 	get_direction()
@@ -74,3 +86,20 @@ func idle_animation():
 		player.play("idle_back")
 	if player_direction==down:
 		player.play("idle_front")
+		
+func life_and_resources():
+	hp.value=health
+	wood_amount.text= str(wood)
+	gold_amount.text= str(gold)
+	silver_amount.text= str(silver)
+
+func _on_range_body_entered(body: Node2D) -> void:
+	if body.is_in_group("enemies"):
+		pass
+func _on_range_body_exited(body: Node2D) -> void:
+	if body.is_in_group("enemies"):
+		pass
+
+func take_damage(amount: int):
+	health-=amount
+	hp.value=health
