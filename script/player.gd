@@ -4,7 +4,7 @@ extends CharacterBody2D
 @onready var gold_amount: Label = $stats/gold_amount
 @onready var silver_amount: Label = $stats/silver_amount
 @onready var wood_amount: Label = $stats/wood_amount
-@onready var hp: TextureProgressBar =$stats/hp_progress
+@onready var hp_player: TextureProgressBar =$stats/hp_progress
 @onready var area_2d: Area2D = $range
 @onready var timer: Timer = $range/Timer
 
@@ -88,7 +88,7 @@ func idle_animation():
 		player.play("idle_front")
 		
 func life_and_resources():
-	hp.value=health
+	hp_player.value=health
 	wood_amount.text= str(wood)
 	gold_amount.text= str(gold)
 	silver_amount.text= str(silver)
@@ -102,4 +102,5 @@ func _on_range_body_exited(body: Node2D) -> void:
 
 func take_damage(amount: int):
 	health-=amount
-	hp.value=health
+	hp_player.value=health
+	print(health)

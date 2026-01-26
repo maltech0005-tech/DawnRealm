@@ -2,6 +2,8 @@ extends CharacterBody2D
 @onready var enemy : AnimatedSprite2D = $enemy_sprite
 @onready var hp_progress: TextureProgressBar = $hp
 @onready var timer: Timer = $Area2D/Timer
+@onready var attack_timer: Timer = $Area2D/attack_timer
+
 
 const SPEED = 30.0
 var hp=6
@@ -25,27 +27,30 @@ func _ready() -> void:
 	hp_progress.hide()
 
 func _physics_process(delta: float) -> void:
-	if player:
-		if player_inrange:
+	if player_inrange:
+		if is_attacking:
+			attack_logic()
+			if Input.is_action_pressed("attack"):
+				check_is_attacked()
+			else:
+				attack()
+		else:
 			attack()
 			velocity = enemy_direction*SPEED*delta
-		if is_attacked:
-			check_is_attacked()
-		if is_attacking:
-			check_is_attacked()
 	else:
 		velocity = Vector2.ZERO
 		idle_animation()
 	move_and_slide()
-	
+
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
+		is_attacking=true
 		is_attacked=true
 
 func _on_area_2d_body_exited(body: Node2D) -> void:
 	if body.is_in_group("player"):
+		is_attacking = false
 		is_attacked=false
-
 
 func _on_range_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
@@ -106,9 +111,11 @@ func attack():
 			enemy.play("walking_front")
 			
 func check_is_attacked():
-	if Input.is_action_just_pressed("attack"):
+	if Input.is_action_pressed("attack"):
 		take_damage()
 		timer.start(1)
+	else:
+		attack_logic()
 		
 func _on_timer_timeout() -> void:
 	hp-=1
@@ -117,3 +124,11 @@ func _on_timer_timeout() -> void:
 		check_is_attacked()
 	else:
 		queue_free()
+		timer.stop()
+		
+func  attack_logic():
+	attack_timer.start(1)
+		
+func _on_attack_timer_timeout() -> void:
+	player.take_damage(5)
+	print("hi")
